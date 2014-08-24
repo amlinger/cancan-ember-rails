@@ -3,7 +3,7 @@ CancanEmberRails::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -47,10 +47,13 @@ CancanEmberRails::Application.routes.draw do
   #   resources :posts, concerns: :toggleable
   #   resources :photos, concerns: :toggleable
 
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
+
+  # namespace :api, :path => "", :constraints => {:subdomain => "api"} do
+  namespace :api, :defaults => {:format => :json} do
+    namespace :v1 do
+      get 'rules'     => 'ability#index'
+      get 'rules/:id' => 'ability#show'
+    end
+  end
+
 end
